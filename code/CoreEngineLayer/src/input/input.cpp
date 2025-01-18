@@ -13,24 +13,23 @@ void InputBindWindow(Window& TheWindow) {
 
 void CallTriger(GLFWwindow* window, int key, int scancode, int action, int mods) {
     for (auto& callback : Input::KeyCallbacksVector) {
-        callback(key, scancode, action, mods);
+        callback(static_cast<EKey>(key), static_cast<EAction>(action), static_cast<EModifier>(mods));
     }
 }
 
-void KeyPressTimeCounter(int key, int scancode, int action, int mods) {
-    if (action == GLFW_PRESS) {
-        Input::KeyPressTimesMap[static_cast<EKey>(key)] = glfwGetTime();
+void KeyPressTimeCounter(EKey key, EAction action, EModifier mods) {
+    if (action == EAction::Press) {
+        Input::KeyPressTimesMap[key] = glfwGetTime();
     }
-    else {
-    //else if (action == GLFW_RELEASE) {
-        Input::KeyPressTimesMap[static_cast<EKey>(key)] = 0;
+    else if (action == EAction::Release) {
+        Input::KeyPressTimesMap[key] = 0;
     }
 }
 void Input::Init(Window& window){
         if (!_bInitialized) {
             InputBindWindow(window);
-            glfwSetInputMode(_window, GLFW_REPEAT, GLFW_FALSE);
             glfwSetKeyCallback(_window, CallTriger);
+            SetKeyCallback(KeyPressTimeCounter);
             _bInitialized = true;
         }
 }
@@ -66,9 +65,11 @@ std::pair<FReal64, FReal64> Input::GetCursorPosition() {
 FReal64 Input::GetKeyPressTime(EKey key) {
     if (KeyPressTimesMap[key] == 0) {
         return 0;
-    }
+
+  }
     else {
         return glfwGetTime() - KeyPressTimesMap[key];
+
     }
 }
 

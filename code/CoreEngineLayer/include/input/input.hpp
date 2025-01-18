@@ -11,8 +11,6 @@
 
 namespace Engine {
 
-using KeyCallback = std::function<void(int, int, int, int)>;
-
 enum class EKey {
     A = GLFW_KEY_A, B = GLFW_KEY_B, C = GLFW_KEY_C, D = GLFW_KEY_D, E = GLFW_KEY_E, 
     F = GLFW_KEY_F, G = GLFW_KEY_G, H = GLFW_KEY_H, I = GLFW_KEY_I, J = GLFW_KEY_J, 
@@ -26,6 +24,16 @@ enum class EKey {
     LeftMouseButton = GLFW_MOUSE_BUTTON_1, RightMouseButton = GLFW_MOUSE_BUTTON_2
 
 };
+
+enum class EAction {
+    Press = GLFW_PRESS, Release = GLFW_RELEASE, Repeat = GLFW_REPEAT
+};
+
+enum class EModifier {
+    Shift = GLFW_MOD_SHIFT, Control = GLFW_MOD_CONTROL, Alt = GLFW_MOD_ALT
+};
+
+using KeyCallback = std::function<void(EKey, EAction, EModifier)>;
 
 class Input {
 
@@ -55,7 +63,7 @@ private:
     static std::vector<KeyCallback> KeyCallbacksVector;
     friend void InputBindWindow(Window& window);
     friend void CallTriger(GLFWwindow* window, int key, int scancode, int action, int mods);
-    friend void KeyPressTimeCounter(int key, int scancode, int action, int mods);
+    friend void KeyPressTimeCounter(EKey key, EAction action, EModifier mods);
 };
 
 }
