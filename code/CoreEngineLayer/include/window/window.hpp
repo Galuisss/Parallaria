@@ -40,7 +40,7 @@ public:
 
     inline WindowSetting GetWindowSetting() const { return _windowSetting; };
     void SetWindowSetting(WindowSetting);
-    friend void InputBindWindow(Window);
+    friend void InputBindWindow(Window*);
 };
 
 }
