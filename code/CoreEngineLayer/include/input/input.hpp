@@ -6,8 +6,8 @@
 #include <unordered_map>
 #include <vector>
 #include <GLFW/glfw3.h>
-#include "env.hpp"
-#include "window/window.hpp"
+#include <env.hpp>
+#include <window/window.hpp>
 
 namespace Engine {
 
@@ -33,7 +33,7 @@ public:
     
     Input() = delete;
 
-    static void Init(Window* window);
+    static void Init(Window& window);
     static bool IsKeyPressed(EKey key);
     static bool IsMouseButtonPressed(EKey button);
 
@@ -53,7 +53,7 @@ private:
     static GLFWwindow* _window;
     static std::unordered_map<EKey, FReal64> KeyPressTimesMap;
     static std::vector<KeyCallback> KeyCallbacksVector;
-    friend void InputBindWindow(Window* window);
+    friend void InputBindWindow(Window& window);
     friend void CallTriger(GLFWwindow* window, int key, int scancode, int action, int mods);
     friend void KeyPressTimeCounter(int key, int scancode, int action, int mods);
 };

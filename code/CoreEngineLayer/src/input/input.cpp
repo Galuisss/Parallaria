@@ -1,4 +1,4 @@
-#include "input/input.hpp"
+#include <input/input.hpp>
 
 namespace Engine{
 
@@ -7,8 +7,8 @@ bool Input::_bInitialized = false;
 std::unordered_map<EKey, FReal64> Input::KeyPressTimesMap = {};
 std::vector<KeyCallback> Input::KeyCallbacksVector = {};
 
-void InputBindWindow(Window* TheWindow) {
-    Input::_window = TheWindow->_windowHandle;
+void InputBindWindow(Window& TheWindow) {
+    Input::_window = TheWindow._windowHandle;
 }
 
 void CallTriger(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -26,7 +26,7 @@ void KeyPressTimeCounter(int key, int scancode, int action, int mods) {
         Input::KeyPressTimesMap[static_cast<EKey>(key)] = 0;
     }
 }
-void Input::Init(Window* window){
+void Input::Init(Window& window){
         if (!_bInitialized) {
             InputBindWindow(window);
             glfwSetInputMode(_window, GLFW_REPEAT, GLFW_FALSE);
